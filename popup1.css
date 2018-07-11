@@ -1,0 +1,78 @@
+.btn {
+    background: transparent;
+    border: 0;
+    cursor: hand;
+}
+.helper-wrapper {
+    position: relative;
+    display: inline-block;
+    clear: none;
+}
+
+.helper-focus-remover {
+    display: block;
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+}
+
+.btn-icon:focus + * + .helper-focus-remover {
+    width: 100%;
+    height: 100%;
+}
+
+.btn-icon-popup {
+    display: none;
+    position: absolute;  
+    top: 0;
+    left: 0;
+    transform: translate(-40.5%, -100%);
+    background-color: #ffffcc;
+    padding: 8px;
+    border-radius: 2px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
+}
+.animated {
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+.fadeIn {
+    animation-name: fadeIn;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.btn-icon-popup::after {
+    content: '▼';
+    position: absolute;
+    left: 112px;
+    top: 100%;
+    width: 10px;
+    height: 10px;
+    transform: translate(0, -6px);
+    color:#ffffcc;
+    clear: both;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15);
+}
+
+.btn-icon:focus + .btn-icon-popup {
+    display: block;
+}
+
+.btn:focus {
+    outline: none !important;
+}
+
+/**
+ ** CONTENT-SPECIFIC
+ **/
+ 
+.person {
+    font-weight: bold;
+}
