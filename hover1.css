@@ -60,6 +60,9 @@
 /**
  ** CONTENT-SPECIFIC
  **/
+html, body {
+    font: 12pt/14pt sans-serif;
+}
 
 .person {
     font-weight: bold;

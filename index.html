@@ -11,6 +11,10 @@
                 max-width: 1024px;
                 margin: auto;
             }
+            h2 { 
+                margin-top: 2em;
+            }
+
             .tabs > div {
                 min-height: 300px;
             }
@@ -38,12 +42,6 @@
             </p>
         
             <h2>Helptext-oriented popup #1</h2>
-            <p>
-                For use when you want deliberate de/activation via :focus (clicking or tabbing). The popup text
-                is inherently difficult to select (selection removes focus, and closes the popup). De-focusing 
-                upon second click in the same location is accomplished by using CSS to move a transparent div into
-                place upon focus.
-            </p>
             <div class='tabs popup1'>
                 <ul>
                     <li><a href="#popup1-preview">Preview</a></li>
@@ -54,60 +52,66 @@
                 <div id="popup1-css" class='csses' src='popup1.css'></div>
                 <div id="popup1-html" class='htmls' src='popup1.html'><script type='text/plain'></script></div>
             </div>
+            <p>
+                <strong>Notes:</strong> For use when you want deliberate de/activation via :focus (clicking or tabbing). The popup text
+                is inherently difficult to select (selection removes focus, and closes the popup). De-focusing 
+                upon second click in the same location is accomplished by using CSS to move a transparent div into
+                place upon focus.
+            </p>
 
             <h2>Hover help</h2>
+            <div class='tabs hover1'>
+                <ul>
+                    <li><a href="#hover1-preview">Preview</a></li>
+                    <li><a href="#hover1-css">CSS</a></li>
+                    <li><a href="#hover1-html">HTML</a></li>
+                </ul>
+                <div id="hover1-preview" class='previews'><iframe src="javascript:void(0);"></iframe></div>
+                <div id="hover1-css" class='csses' src='hover1.css'></div>
+                <div id="hover1-html" class='htmls' src='hover1.html'><script type='text/plain'></script></div>
+            </div>
             <p>
-                For use when you want passive help (hovering with the mouse). The popup is a child
+                <strong>Notes:</strong>For use when you want passive help (hovering with the mouse). The popup is a child
                 of the hover element, so text selection is possible.
             </p>
-            <div class='tabs hover1'>
-                    <ul>
-                        <li><a href="#hover1-preview">Preview</a></li>
-                        <li><a href="#hover1-css">CSS</a></li>
-                        <li><a href="#hover1-html">HTML</a></li>
-                    </ul>
-                    <div id="hover1-preview" class='previews'><iframe src="javascript:void(0);"></iframe></div>
-                    <div id="hover1-css" class='csses' src='hover1.css'></div>
-                    <div id="hover1-html" class='htmls' src='hover1.html'><script type='text/plain'></script></div>
-                </div>
         </div>
-    <script type="text/javascript">
-        $(function() {
-            $(".tabs").tabs();
-            $(".tabs")
-                .map(function(i, tabgroup) {
-                    var html = $(tabgroup).find('.htmls')[0];
-                    var css = $(tabgroup).find('.csses')[0];
-                    var htmlSrc = $(html).attr('src');
-                    var cssSrc = $(css).attr('src');
-                    var ehtml = ace.edit(html);
-                        ehtml.session.setMode("ace/mode/html");
-                    var ecss = ace.edit(css);
-                        ecss.session.setMode("ace/mode/css");
-                    var hpromise = $.get(htmlSrc).then(loadHtml.bind(this, ehtml));
-                    var cpromise = $.get(cssSrc).then(loadCss.bind(this, ecss));
-                    Promise.all([hpromise, cpromise]).then(function() {
-                        ehtml.on('change', updateDoc.bind(this, ehtml, ecss, tabgroup));
-                        ecss.on('change', updateDoc.bind(this, ehtml, ecss, tabgroup));
-                        updateDoc(ehtml, ecss, tabgroup);
-                    })
-                });
-        });
+        <script type="text/javascript">
+            $(function() {
+                $(".tabs").tabs();
+                $(".tabs")
+                    .map(function(i, tabgroup) {
+                        var html = $(tabgroup).find('.htmls')[0];
+                        var css = $(tabgroup).find('.csses')[0];
+                        var htmlSrc = $(html).attr('src');
+                        var cssSrc = $(css).attr('src');
+                        var ehtml = ace.edit(html);
+                            ehtml.session.setMode("ace/mode/html");
+                        var ecss = ace.edit(css);
+                            ecss.session.setMode("ace/mode/css");
+                        var hpromise = $.get(htmlSrc).then(loadHtml.bind(this, ehtml));
+                        var cpromise = $.get(cssSrc).then(loadCss.bind(this, ecss));
+                        Promise.all([hpromise, cpromise]).then(function() {
+                            ehtml.on('change', updateDoc.bind(this, ehtml, ecss, tabgroup));
+                            ecss.on('change', updateDoc.bind(this, ehtml, ecss, tabgroup));
+                            updateDoc(ehtml, ecss, tabgroup);
+                        })
+                    });
+            });
 
-        function loadHtml(ehtml, data) {
-            ehtml.setValue(data, -1);
-        }
+            function loadHtml(ehtml, data) {
+                ehtml.setValue(data, -1);
+            }
 
-        function loadCss(ecss, data) {
-            ecss.setValue(data, -1);
-        }
+            function loadCss(ecss, data) {
+                ecss.setValue(data, -1);
+            }
 
-        function updateDoc(ehtml, ecss, tabgroup) {
-            var ihtml = $(tabgroup).find(".previews>iframe").contents().find('html');
-            ihtml.html(ehtml.getValue());
-            $(tabgroup).find(".previews>iframe").contents().find("html")
-                .append("<style>" + ecss.getValue() + "</style>");
-        }
-    </script>
+            function updateDoc(ehtml, ecss, tabgroup) {
+                var ihtml = $(tabgroup).find(".previews>iframe").contents().find('html');
+                ihtml.html(ehtml.getValue());
+                $(tabgroup).find(".previews>iframe").contents().find("html")
+                    .append("<style>" + ecss.getValue() + "</style>");
+            }
+        </script>
     </body>
 </html>
