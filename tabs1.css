@@ -1,0 +1,38 @@
+    /* Unlike other CSS-only approaches, these tabs hold their state
+       and can be nested. There can be as many as you like on the page.
+       Also, the CSS for the tab-to-pane references only needs to be
+       specified once for the whole page.
+       
+         - The only catch is that you have to name the radio buttons
+           and labels differently.
+     */
+    
+     .tab-group>.tab-pane, .tab-group>input {
+        display: none;
+      }
+      
+      .tab-group>input:checked + label {
+        background: yellow;
+      }
+      
+      .tab-group>input:nth-of-type(1):checked ~ .tab-pane:nth-of-type(1),
+      .tab-group>input:nth-of-type(2):checked ~ .tab-pane:nth-of-type(2),
+      .tab-group>input:nth-of-type(3):checked ~ .tab-pane:nth-of-type(3),
+      .tab-group>input:nth-of-type(4):checked ~ .tab-pane:nth-of-type(4)
+      /* ^^^ There must be more rows like this than tabs. */
+      {
+        display: block;
+      }
+      
+      /**
+       ** Everything below here is style-related.
+       **/
+      .tab-pane {
+        border: 1px solid red;
+        min-height: 100px;
+      }
+      
+      .tab-group>label {
+        border: 1px solid black; border-collapse: collapse; margin: 0;
+        padding: 0.5em; display: inline-block; cursor: pointer;
+      }
