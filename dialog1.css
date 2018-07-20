@@ -1,0 +1,83 @@
+/*
+* The CSS defines a declarative behavior which launches a dialog.
+* As usual, no JS is used.
+*/
+.jsless-dialog {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 3em 3em 6em 3em;
+    border: 1px solid black;
+}
+.dialog-x {
+    float: right;
+    position: relative;
+    top: -0.25em;
+    cursor: pointer;
+}
+.dialog-x:hover { background: yellow; }
+.dialog-x:active { background: green; }
+.jsless-dialog-btn:hover { background: yellow; }
+.jsless-dialog-btn:active { background: green; }
+
+.jsless-dialog-cb, .jsless-dialog-backdrop { display: none; }
+.dialog-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 1em;
+    padding: 0.5em;
+    background: #ccccff;
+    color: #333;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+.dialog-btn-row {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 3em;
+    padding: 0.5em 3em 0.5em 3em;
+    text-align: right;
+}
+.jsless-dialog-btn {
+    cursor: pointer;
+    background: #ddd;
+    border-radius: 3px;
+    padding: 0.5em;
+}
+
+.jsless-dialog-cb:checked + .jsless-dialog-backdrop {
+    display: block;
+    background: black;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.jsless-dialog-cb:checked + * + .jsless-dialog {
+    display: block;
+}
+
+/**
+** Everything below here is style-related.
+**/
+.tab-pane {
+border: 1px solid red;
+min-height: 100px;
+}
+
+.tab-group>label {
+border: 1px solid black; border-collapse: collapse; margin: 0;
+padding: 0.5em; display: inline-block; cursor: pointer;
+}
